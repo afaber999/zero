@@ -1,5 +1,7 @@
 
 
-bin
+.bin
 .tmp
 /csrc/*.elf
+/esputil/esputil
+/csrc/firmware.*
