@@ -5,6 +5,7 @@ ESPUTIL     ?= ../esputil/esputil
 TOOLCHAIN   ?= riscv64-unknown-elf
 LINKFLAGS   ?= -Tlink.ld -nostdlib -nostartfiles -Wl,--gc-sections $(EXTRA_LINKFLAGS)
 NEWLIB?=/usr/include/newlib
+FLASH_ADDR  ?= 0  # 2nd stage bootloader flash offset
 
 CFLAGS      ?= -W -Wall -Wextra -Werror -Wshadow -pedantic \
                -Wdouble-promotion -fno-common  \
@@ -31,6 +32,12 @@ $(PROG).elf: $(SRCS)
 $(PROG).bin: $(PROG).elf $(ESPUTIL)
 	$(ESPUTIL) mkbin $(PROG).elf $@
 
+
+$(PROG).dis: $(PROG).elf
+	$(TOOLCHAIN)-objdump -D $(PROG).elf >  $@
+
+flash: $(PROG).bin $(ESPUTIL)
+	$(ESPUTIL) flash $(FLASH_ADDR) $(PROG).bin
 
 monitor: $(ESPUTIL)
 	$(ESPUTIL) monitor

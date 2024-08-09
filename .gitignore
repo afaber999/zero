@@ -1,7 +1,8 @@
-
-
-.bin
-.tmp
-/csrc/*.elf
-/esputil/esputil
-/csrc/firmware.*
+*.bin
+*.tmp
+*.elf
+esputil/esputil
+firmware.*
+firmware.*
+.zig-cache
+zig-out
